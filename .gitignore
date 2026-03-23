@@ -29,9 +29,8 @@ Thumbs.db
 
 # Temp uploads
 temp_uploads/
+uploaded_reports/
 
 # Node
-frontend/node_modules/
-frontend/.next/
-venv/
-venv/
+node_modules/
+.next/
