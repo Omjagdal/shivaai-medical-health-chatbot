@@ -133,7 +133,7 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex flex-col h-full max-w-6xl mx-auto">
+    <div className="flex flex-col h-full max-w-6xl mx-auto overflow-x-hidden">
       <style jsx>{`
         @keyframes gradient-shift {
           0%, 100% { background-position: 0% 50%; }
@@ -241,7 +241,7 @@ export function ChatInterface() {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-medical-blue to-medical-purple bg-clip-text text-transparent">
+                <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-medical-blue to-medical-purple bg-clip-text text-transparent">
                   SHIVAAI Medical Assistant
                 </h1>
                 <Sparkles className="h-5 w-5 text-medical-purple animate-pulse" />
@@ -255,34 +255,34 @@ export function ChatInterface() {
       </Card>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-        <TabsList className="grid w-full grid-cols-4 mb-4 bg-gradient-to-r from-medical-blue/5 to-medical-purple/5 p-1">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-4 bg-gradient-to-r from-medical-blue/5 to-medical-purple/5 p-1 h-auto gap-1">
           <TabsTrigger 
             value="chat" 
-            className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300"
+            className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300 px-2 py-1.5"
           >
-            <Bot className="h-4 w-4" />
-            Chat Assistant
+            <Bot className="h-4 w-4 shrink-0" />
+            <span className="truncate">Chat</span>
           </TabsTrigger>
           <TabsTrigger 
             value="realtime" 
-            className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300"
+            className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300 px-2 py-1.5"
           >
-            <Zap className="h-4 w-4" />
-            Real-Time Chat
+            <Zap className="h-4 w-4 shrink-0" />
+            <span className="truncate">Real-Time</span>
           </TabsTrigger>
           <TabsTrigger 
             value="upload" 
-            className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300"
+            className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300 px-2 py-1.5"
           >
-            <Upload className="h-4 w-4" />
-            Report Analysis
+            <Upload className="h-4 w-4 shrink-0" />
+            <span className="truncate">Reports</span>
           </TabsTrigger>
           <TabsTrigger 
             value="simplify" 
-            className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300"
+            className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300 px-2 py-1.5"
           >
-            <Brain className="h-4 w-4" />
-            Term Simplifier
+            <Brain className="h-4 w-4 shrink-0" />
+            <span className="truncate">Simplifier</span>
           </TabsTrigger>
         </TabsList>
 
@@ -340,7 +340,7 @@ export function ChatInterface() {
 
                     <div
                       className={`
-                      max-w-[80%] rounded-lg px-4 py-3 text-sm transition-all duration-300
+                      max-w-[90%] sm:max-w-[80%] rounded-lg px-3 sm:px-4 py-3 text-sm transition-all duration-300 break-words overflow-hidden
                       ${
                         message.type === "user"
                           ? "bg-gradient-to-r from-medical-blue to-medical-blue/90 text-white ml-auto shadow-md hover:shadow-lg"
@@ -417,9 +417,10 @@ export function ChatInterface() {
                   )}
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground mt-2 text-center flex items-center justify-center gap-1">
-                <Shield className="h-3 w-3" />
-                SHIVAAI provides general medical information. Always consult healthcare professionals for medical advice.
+              <p className="text-xs text-muted-foreground mt-2 text-center flex items-center justify-center gap-1 px-2">
+                <Shield className="h-3 w-3 shrink-0" />
+                <span className="hidden sm:inline">SHIVAAI provides general medical information. Always consult healthcare professionals for medical advice.</span>
+                <span className="sm:hidden">For informational purposes only. Consult a doctor.</span>
               </p>
             </div>
           </Card>

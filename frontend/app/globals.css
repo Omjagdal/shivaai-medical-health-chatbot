@@ -128,9 +128,30 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
+  html, body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
   }
+  body {
+    word-break: break-word;
+  }
+}
+
+/* Responsive markdown rendering in reports */
+.markdown-container {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.markdown-container pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.markdown-container img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Medical chatbot specific animations */

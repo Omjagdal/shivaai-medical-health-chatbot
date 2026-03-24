@@ -27,7 +27,7 @@ export function HomeHero() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-medical-blue/5 to-medical-purple/5 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-medical-blue/5 to-medical-purple/5 relative overflow-x-hidden">
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -203,7 +203,7 @@ export function HomeHero() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
-          className="absolute w-96 h-96 bg-medical-blue/10 rounded-full blur-3xl animate-float"
+          className="absolute w-48 h-48 sm:w-96 sm:h-96 bg-medical-blue/10 rounded-full blur-3xl animate-float"
           style={{ 
             top: '10%', 
             left: '5%',
@@ -211,7 +211,7 @@ export function HomeHero() {
           }}
         />
         <div 
-          className="absolute w-96 h-96 bg-medical-purple/10 rounded-full blur-3xl animate-float-slow"
+          className="absolute w-48 h-48 sm:w-96 sm:h-96 bg-medical-purple/10 rounded-full blur-3xl animate-float-slow"
           style={{ 
             top: '50%', 
             right: '10%',
@@ -220,7 +220,7 @@ export function HomeHero() {
           }}
         />
         <div 
-          className="absolute w-96 h-96 bg-medical-green/10 rounded-full blur-3xl animate-float"
+          className="absolute w-48 h-48 sm:w-96 sm:h-96 bg-medical-green/10 rounded-full blur-3xl animate-float"
           style={{ 
             bottom: '10%', 
             left: '40%',
@@ -256,7 +256,7 @@ export function HomeHero() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center relative">
+      <section className="container mx-auto px-4 py-10 sm:py-20 text-center relative">
         <div className="animate-bounce-in">
           <Badge variant="secondary" className="mb-6 bg-medical-blue/10 text-medical-blue border-medical-blue/20 hover:bg-medical-blue/20 transition-all duration-300 cursor-default">
             <Sparkles className="w-3 h-3 mr-1" />
@@ -264,13 +264,13 @@ export function HomeHero() {
           </Badge>
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-bold text-balance mb-6 animate-slide-up">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-balance mb-6 animate-slide-up">
           <span className="text-gradient">Your Intelligent</span>
           <br />
           <span className="text-gradient">Medical Assistant</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-muted-foreground text-balance mb-10 max-w-3xl mx-auto animate-slide-up stagger-1">
+        <p className="text-base sm:text-xl md:text-2xl text-muted-foreground text-balance mb-8 sm:mb-10 max-w-3xl mx-auto animate-slide-up stagger-1 px-2">
           SHIVAAI combines cutting-edge AI with medical expertise to provide instant answers, analyze reports, and
           simplify complex medical terminology for better healthcare understanding.
         </p>
@@ -290,17 +290,17 @@ export function HomeHero() {
         </div>
 
         {/* Floating Stats */}
-        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-16 animate-fade-in stagger-3">
-          <div className="text-center card-hover p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-medical-blue/10">
-            <div className="text-3xl font-bold text-medical-blue">24/7</div>
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-2xl mx-auto mt-10 sm:mt-16 animate-fade-in stagger-3">
+          <div className="text-center card-hover p-2 sm:p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-medical-blue/10">
+            <div className="text-xl sm:text-3xl font-bold text-medical-blue">24/7</div>
             <div className="text-sm text-muted-foreground">Available</div>
           </div>
-          <div className="text-center card-hover p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-medical-purple/10">
-            <div className="text-3xl font-bold text-medical-purple">1000+</div>
+          <div className="text-center card-hover p-2 sm:p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-medical-purple/10">
+            <div className="text-xl sm:text-3xl font-bold text-medical-purple">1000+</div>
             <div className="text-sm text-muted-foreground">Diseases</div>
           </div>
-          <div className="text-center card-hover p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-medical-green/10">
-            <div className="text-3xl font-bold text-medical-green">AI</div>
+          <div className="text-center card-hover p-2 sm:p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-medical-green/10">
+            <div className="text-xl sm:text-3xl font-bold text-medical-green">AI</div>
             <div className="text-sm text-muted-foreground">Powered</div>
           </div>
         </div>
@@ -308,12 +308,12 @@ export function HomeHero() {
 
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-10 sm:mb-16 animate-fade-in">
           <Badge variant="outline" className="mb-4 border-medical-blue/20">
             <Sparkles className="w-3 h-3 mr-1" />
             Features
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-gradient">
             Comprehensive Medical AI Features
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -471,19 +471,19 @@ export function HomeHero() {
 
       {/* Benefits Section */}
       <section className="container mx-auto px-4 py-20">
-        <div className="bg-gradient-to-br from-medical-blue/5 via-medical-purple/5 to-medical-green/5 rounded-3xl p-12 backdrop-blur-sm border border-white/20 animate-fade-in">
-          <div className="text-center mb-16">
+        <div className="bg-gradient-to-br from-medical-blue/5 via-medical-purple/5 to-medical-green/5 rounded-2xl sm:rounded-3xl p-6 sm:p-12 backdrop-blur-sm border border-white/20 animate-fade-in">
+          <div className="text-center mb-10 sm:mb-16">
             <Badge variant="outline" className="mb-4 border-medical-blue/20">
               <Shield className="w-3 h-3 mr-1" />
               Why Us
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Why Choose SHIVAAI?</h2>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-gradient">Why Choose SHIVAAI?</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Built with healthcare professionals and patients in mind
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12">
             <div className="text-center group animate-slide-up stagger-1">
               <div className="w-20 h-20 bg-gradient-to-br from-medical-blue/20 to-medical-blue/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 animate-pulse-glow">
                 <Shield className="w-10 h-10 text-medical-blue" />
@@ -520,9 +520,9 @@ export function HomeHero() {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-20 text-center">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-medical-blue/10 via-medical-purple/10 to-medical-green/10 rounded-3xl p-12 backdrop-blur-sm border border-white/20 animate-scale-in relative overflow-hidden">
+        <div className="max-w-4xl mx-auto bg-gradient-to-r from-medical-blue/10 via-medical-purple/10 to-medical-green/10 rounded-2xl sm:rounded-3xl p-6 sm:p-12 backdrop-blur-sm border border-white/20 animate-scale-in relative overflow-hidden">
           <div className="absolute inset-0 shimmer opacity-20" />
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient relative z-10">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6 text-gradient relative z-10">
             Ready to Experience Intelligent Healthcare?
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl mb-10 relative z-10 max-w-2xl mx-auto">

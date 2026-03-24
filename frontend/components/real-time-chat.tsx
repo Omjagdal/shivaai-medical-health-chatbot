@@ -335,8 +335,8 @@ export function RealTimeChat() {
       <Card className="border-medical-purple/20 bg-gradient-to-r from-medical-purple/10 via-medical-purple/5 to-transparent animate-gradient hover-lift overflow-hidden relative animate-fade-in">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
         <CardContent className="p-6 relative z-10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
               <div className={`p-3 rounded-xl bg-gradient-to-br from-medical-purple/30 to-medical-purple/10 animate-pulse-glow relative`}>
                 <Zap className="h-6 w-6 text-medical-purple animate-bounce-gentle" />
                 <div className="absolute -top-1 -right-1">
@@ -362,7 +362,7 @@ export function RealTimeChat() {
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 self-end sm:self-auto">
               {!isConnected && !isConnecting && (
                 <Button
                   variant="outline"
@@ -399,7 +399,7 @@ export function RealTimeChat() {
       )}
 
       {/* Chat Interface with Enhanced Design */}
-      <Card className="flex flex-col h-[600px] hover-lift overflow-hidden relative border-medical-purple/20 animate-scale-in">
+      <Card className="flex flex-col h-[calc(100dvh-20rem)] sm:h-[600px] min-h-[300px] hover-lift overflow-hidden relative border-medical-purple/20 animate-scale-in">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute w-full h-full bg-gradient-to-br from-medical-purple/20 via-transparent to-medical-blue/20 animate-gradient" />
@@ -448,7 +448,7 @@ export function RealTimeChat() {
 
                 <div
                   className={`
-                  max-w-[80%] rounded-xl px-5 py-3 text-sm transition-all duration-300 relative overflow-hidden
+                  max-w-[90%] sm:max-w-[80%] rounded-xl px-3 sm:px-5 py-3 text-sm transition-all duration-300 relative overflow-hidden break-words
                   ${
                     message.type === "user"
                       ? "bg-gradient-to-r from-medical-purple to-medical-purple/90 text-white ml-auto shadow-lg hover:shadow-xl"
@@ -530,7 +530,7 @@ export function RealTimeChat() {
             <Button
               onClick={handleSendMessage}
               disabled={!input.trim() || !isConnected || isWaitingForResponse}
-              className="bg-gradient-to-r from-medical-purple to-medical-blue hover:from-medical-purple/90 hover:to-medical-blue/90 text-white shadow-lg hover:shadow-xl button-hover group px-6 py-6"
+              className="bg-gradient-to-r from-medical-purple to-medical-blue hover:from-medical-purple/90 hover:to-medical-blue/90 text-white shadow-lg hover:shadow-xl button-hover group px-4 sm:px-6 py-6 shrink-0"
             >
               {isWaitingForResponse ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
