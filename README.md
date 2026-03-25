@@ -233,6 +233,4 @@ curl -X POST http://localhost:8001/upload-report/ -F "file=@/path/to/your/report
 
 ---
 
-## 📄 License
 
-This project was built for the **OM AI Summit** hackathon.
