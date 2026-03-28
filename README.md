@@ -229,7 +229,7 @@ curl -X POST http://localhost:8001/upload-report/ -F "file=@/path/to/your/report
 - **💬 Real-time WebSocket Chat** — Live medical consultations via WebSocket
 - **🔬 Medical Term Simplifier** — Break down complex medical jargon into plain language
 - **🗃️ Report Management** — Store, list, and download uploaded reports
-- **📊 SQLite Database** — Persistent storage for reports and chat history
+
 
 ---
 
