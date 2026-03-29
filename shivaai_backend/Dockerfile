@@ -29,5 +29,5 @@ EXPOSE 8001
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8001/api/v1/health')" || exit 1
 
-# Run with uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "1"]
+# Run with uvicorn (reads PORT env var for Render compat)
+CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001} --workers 1"
