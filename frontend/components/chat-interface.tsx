@@ -23,7 +23,8 @@ export function ChatInterface() {
       id: "1",
       type: "assistant",
       content:
-        "Hello! I'm **SHIVAAI**, your AI medical assistant powered by **Self-RAG** technology. I can help you with:\n\n• 🩺 Medical questions with evidence-based answers\n• 📄 Report analysis\n• 🔬 Medical term simplification\n\nHow can I assist you today?",
+        "Hello! I'm **SHIVAAI**, your AI medical assistant powered by **Self-RAG** technology.",
+
       timestamp: new Date(),
       confidence: 1.0,
     },
@@ -150,10 +151,10 @@ export function ChatInterface() {
               prev.map((msg) =>
                 msg.id === streamId
                   ? {
-                      ...msg,
-                      content: "I'm having trouble connecting right now. Please try again.",
-                      isTyping: false,
-                    }
+                    ...msg,
+                    content: "I'm having trouble connecting right now. Please try again.",
+                    isTyping: false,
+                  }
                   : msg
               )
             )
@@ -170,12 +171,12 @@ export function ChatInterface() {
             prev.map((msg) =>
               msg.id === streamId
                 ? {
-                    ...msg,
-                    confidence: metaResponse.confidence,
-                    needsReview: metaResponse.needs_professional_review,
-                    sources: metaResponse.sources,
-                    isTyping: false,
-                  }
+                  ...msg,
+                  confidence: metaResponse.confidence,
+                  needsReview: metaResponse.needs_professional_review,
+                  sources: metaResponse.sources,
+                  isTyping: false,
+                }
                 : msg
             )
           )
@@ -195,13 +196,13 @@ export function ChatInterface() {
           prev.map((msg) =>
             msg.id === streamId
               ? {
-                  ...msg,
-                  content: response.answer,
-                  isTyping: false,
-                  confidence: response.confidence,
-                  needsReview: response.needs_professional_review,
-                  sources: response.sources,
-                }
+                ...msg,
+                content: response.answer,
+                isTyping: false,
+                confidence: response.confidence,
+                needsReview: response.needs_professional_review,
+                sources: response.sources,
+              }
               : msg
           )
         )
@@ -210,10 +211,10 @@ export function ChatInterface() {
           prev.map((msg) =>
             msg.id === streamId
               ? {
-                  ...msg,
-                  content: "I'm having trouble connecting to my medical database. Please try again.",
-                  isTyping: false,
-                }
+                ...msg,
+                content: "I'm having trouble connecting to my medical database. Please try again.",
+                isTyping: false,
+              }
               : msg
           )
         )
@@ -339,13 +340,12 @@ export function ChatInterface() {
                       </Avatar>
                     )}
 
-                    <div className={`max-w-[90%] sm:max-w-[80%] rounded-lg px-3 sm:px-4 py-3 text-sm transition-all duration-300 break-words overflow-hidden ${
-                      message.type === "user"
-                        ? "bg-gradient-to-r from-medical-blue to-medical-blue/90 text-white ml-auto shadow-md hover:shadow-lg"
-                        : message.type === "system"
-                          ? "bg-gradient-to-r from-medical-gray/10 to-medical-gray/5 text-foreground border border-border hover:border-medical-blue/30"
-                          : "bg-white text-card-foreground border border-border shadow-sm hover:shadow-md hover:border-medical-blue/30"
-                    } ${message.isTyping && !message.content ? "animate-pulse-glow" : ""}`}>
+                    <div className={`max-w-[90%] sm:max-w-[80%] rounded-lg px-3 sm:px-4 py-3 text-sm transition-all duration-300 break-words overflow-hidden ${message.type === "user"
+                      ? "bg-gradient-to-r from-medical-blue to-medical-blue/90 text-white ml-auto shadow-md hover:shadow-lg"
+                      : message.type === "system"
+                        ? "bg-gradient-to-r from-medical-gray/10 to-medical-gray/5 text-foreground border border-border hover:border-medical-blue/30"
+                        : "bg-white text-card-foreground border border-border shadow-sm hover:shadow-md hover:border-medical-blue/30"
+                      } ${message.isTyping && !message.content ? "animate-pulse-glow" : ""}`}>
 
                       {/* Message Content */}
                       {message.isTyping && !message.content ? (
