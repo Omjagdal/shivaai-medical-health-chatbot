@@ -1,0 +1,42 @@
+# SHIVAAI — Full Stack Docker Compose
+# Medical AI Chatbot with RAG, Self-RAG, and Streaming
+
+services:
+  # ─── Backend (FastAPI) ───
+  backend:
+    build:
+      context: ./shivaai_backend
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    env_file:
+      - ./shivaai_backend/.env
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - CORS_ORIGINS=http://localhost:3000,http://frontend:3000
+    volumes:
+      - ./shivaai_backend/uploaded_reports:/app/uploaded_reports
+      - ./shivaai_backend/scripts:/app/scripts
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/api/v1/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ─── Frontend (Next.js) ───
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8001
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8001
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

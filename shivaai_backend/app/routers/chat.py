@@ -1,66 +1,106 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import List
-from app.services.chatbot import ChatbotService
-from app.services.gemini_client import GeminiClient
+"""
+Chat router — /api/v1/chat
+Handles both regular and streaming chat interactions with Self-RAG.
+"""
 
-router = APIRouter(
-    prefix="/chat",
-    tags=["chat"]
-)
+import json
+import uuid
+import logging
+from typing import AsyncGenerator
 
-# ------------------------------
-# Pydantic models
-# ------------------------------
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi.responses import StreamingResponse
 
-class ChatRequest(BaseModel):
-    user_text: str  # User's question or extracted PDF text
+from app.models.schemas import ChatRequest, ChatResponse, SourceDocument
+from app.services.rag_service import process_chat, process_chat_stream
 
-class TestInfo(BaseModel):
-    Test_Name: str
-    Normal_Range: str = None
-    Simplified_Explanation: str = None
-    High_Value_May_Indicate: str = None
-    Low_Value_May_Indicate: str = None
+logger = logging.getLogger(__name__)
 
-class ChatResponse(BaseModel):
-    response_text: str
-    relevant_tests: List[TestInfo]
+router = APIRouter(prefix="/chat", tags=["chat"])
 
-# ------------------------------
-# Initialize Chatbot service
-# ------------------------------
 
-llm_client = GeminiClient()  # Uses API key from config
-chatbot_service = ChatbotService(llm_client=llm_client)
+async def _sse_generator(message: str, session_id: str) -> AsyncGenerator[str, None]:
+    """Generate SSE events from the streaming RAG pipeline."""
+    try:
+        # Send session_id as first event
+        yield f"data: {json.dumps({'type': 'session', 'session_id': session_id})}\n\n"
 
-# ------------------------------
-# POST endpoint for chat
-# ------------------------------
+        # Stream tokens
+        async for token in process_chat_stream(message, session_id):
+            yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
+
+        # Send done event
+        yield f"data: {json.dumps({'type': 'done'})}\n\n"
+
+    except Exception as e:
+        logger.error("SSE stream error: %s", e)
+        yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
+
 
 @router.post("/", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
-    query = request.user_text.strip()
-    if not query:
-        raise HTTPException(status_code=400, detail="Query cannot be empty.")
+    """
+    Main chat endpoint with Self-RAG pipeline.
+    Supports both regular and streaming (SSE) responses.
+    """
+    session_id = request.session_id or str(uuid.uuid4())
 
-    # 1️⃣ Retrieve top relevant tests and generate response
-    response_text, relevant_tests = chatbot_service.get_response(query, top_k=5)
-
-    # 2️⃣ Format relevant tests for response
-    relevant_tests_list = [
-        TestInfo(
-            Test_Name=t.get("Test_Name"),
-            Normal_Range=t.get("Normal_Range"),
-            Simplified_Explanation=t.get("Simplified_Explanation"),
-            High_Value_May_Indicate=t.get("High_Value_May_Indicate"),
-            Low_Value_May_Indicate=t.get("Low_Value_May_Indicate")
+    # ── Streaming mode ──
+    if request.stream:
+        return StreamingResponse(
+            _sse_generator(request.message, session_id),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "X-Accel-Buffering": "no",
+            },
         )
-        for t in relevant_tests
-    ]
 
-    # 3️⃣ Return structured response
+    # ── Regular mode ──
+    result = await process_chat(request.message, session_id)
+
     return ChatResponse(
-        response_text=response_text,
-        relevant_tests=relevant_tests_list
+        answer=result.answer,
+        sources=[
+            SourceDocument(**s) for s in result.sources
+        ],
+        confidence=result.confidence,
+        needs_professional_review=result.needs_professional_review,
+        session_id=session_id,
+        used_retrieval=result.used_retrieval,
     )
+
+
+# ─────────────────────────────────────────────
+# WebSocket (backward compatibility)
+# ─────────────────────────────────────────────
+@router.websocket("/ws")
+async def websocket_chat(websocket: WebSocket):
+    """WebSocket endpoint for real-time chat (backward compatible)."""
+    await websocket.accept()
+
+    try:
+        while True:
+            query = await websocket.receive_text()
+            result = await process_chat(query)
+
+            response = {
+                "question": query,
+                "llm_answer": result.answer,
+                "retrieved_docs": [
+                    s["content"] for s in result.sources
+                ],
+                "confidence": result.confidence,
+                "needs_professional_review": result.needs_professional_review,
+            }
+            await websocket.send_json(response)
+
+    except WebSocketDisconnect:
+        logger.info("WebSocket client disconnected")
+    except Exception as e:
+        logger.error("WebSocket error: %s", e)
+        try:
+            await websocket.send_json({"error": str(e)})
+        except Exception:
+            pass
