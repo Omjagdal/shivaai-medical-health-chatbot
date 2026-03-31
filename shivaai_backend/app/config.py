@@ -19,11 +19,6 @@ LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 API_VERSION = os.getenv("API_VERSION", "v1")
 
 # ─────────────────────────────────────────────
-# Database
-# ─────────────────────────────────────────────
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./shivai.db")
-
-# ─────────────────────────────────────────────
 # File Uploads
 # ─────────────────────────────────────────────
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", str(BASE_DIR / "uploaded_reports"))

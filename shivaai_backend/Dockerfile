@@ -22,12 +22,12 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p uploaded_reports temp_uploads scripts
 
-# Expose port
-EXPOSE 8001
+# Expose port (default; Render overrides via $PORT)
+EXPOSE 10000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8001/api/v1/health')" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-10000}/api/v1/health')" || exit 1
 
 # Run with uvicorn (reads PORT env var for Render compat)
-CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001} --workers 1"
+CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"

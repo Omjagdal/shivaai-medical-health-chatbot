@@ -4,6 +4,7 @@ Main FastAPI application with lifespan context, structured logging, and versione
 """
 
 import logging
+import os
 import time
 import uuid
 from contextlib import asynccontextmanager
@@ -185,9 +186,9 @@ async def legacy_websocket(websocket: WebSocket):
 # Run
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
     uvicorn.run(
         "app.main:app",
         host="0.0.0.0",
-        port=10000,
-        reload=True,
+        port=port,
     )

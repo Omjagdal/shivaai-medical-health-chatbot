@@ -34,3 +34,6 @@ uploaded_reports/
 # Node
 node_modules/
 .next/
+
+# Gemini
+.gemini/
