@@ -7,8 +7,8 @@ import pytesseract
 from PIL import Image
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.prompts import PromptTemplate
-from langchain_core.documents import Document
+from langchain.prompts import PromptTemplate
+from langchain.schema import Document
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
@@ -34,47 +34,20 @@ embeddings = HuggingFaceEmbeddings(
 # -------------------------
 # LOAD FAISS + METADATA
 # -------------------------
-vectorstore = None
-metadata = None
+vectorstore = FAISS.load_local(
+    FAISS_INDEX_PATH,
+    embeddings,
+    allow_dangerous_deserialization=True
+)
 
-try:
-    import faiss
-    from pathlib import Path as _Path
-    from langchain_community.docstore.in_memory import InMemoryDocstore
-
-    if _Path(FAISS_INDEX_PATH).exists():
-        raw_index = faiss.read_index(str(FAISS_INDEX_PATH))
-        
-        vectorstore = FAISS.load_local(
-            folder_path=str(_Path(FAISS_INDEX_PATH).parent),
-            embeddings=embeddings,
-            index_name=_Path(FAISS_INDEX_PATH).stem,
-            allow_dangerous_deserialization=True
-        )
-        print(f"✅ FAISS index loaded from {FAISS_INDEX_PATH}")
-    else:
-        print(f"⚠️ FAISS index not found at {FAISS_INDEX_PATH}")
-except Exception as e:
-    print(f"⚠️ Failed to load FAISS index: {e}")
-
-try:
-    from pathlib import Path as _Path
-    if _Path(METADATA_PATH).exists():
-        with open(METADATA_PATH, "r") as f:
-            metadata = json.load(f)
-        print(f"✅ Metadata loaded from {METADATA_PATH}")
-    else:
-        print(f"⚠️ Metadata not found at {METADATA_PATH}")
-except Exception as e:
-    print(f"⚠️ Failed to load metadata: {e}")
+with open(METADATA_PATH, "r") as f:
+    metadata = json.load(f)
 
 
 # -------------------------
 # CONTEXT RETRIEVAL
 # -------------------------
 def get_relevant_contexts(query, k=3):
-    if vectorstore is None:
-        return []
     docs = vectorstore.similarity_search(query, k=k)
     return [doc.page_content for doc in docs]
 
