@@ -317,11 +317,11 @@ export function HomeHero() {
             Comprehensive Medical AI Features
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Four powerful tools designed to enhance your medical knowledge and healthcare experience
+            Three powerful tools designed to enhance your medical knowledge and healthcare experience
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card className="border-medical-blue/20 hover:border-medical-blue/40 card-hover hover-glow group overflow-hidden relative animate-scale-in stagger-1">
             <div className="absolute inset-0 bg-gradient-to-br from-medical-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardHeader className="relative z-10">
@@ -431,41 +431,6 @@ export function HomeHero() {
             </CardContent>
           </Card>
 
-          <Card className="border-medical-accent/20 hover:border-medical-accent/40 card-hover hover-glow group overflow-hidden relative animate-scale-in stagger-4">
-            <div className="absolute inset-0 bg-gradient-to-br from-medical-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardHeader className="relative z-10">
-              <div className="w-14 h-14 bg-gradient-to-br from-medical-accent/20 to-medical-accent/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Zap className="w-7 h-7 text-medical-accent" />
-              </div>
-              <CardTitle className="text-medical-accent flex items-center gap-2">
-                Real-Time Chat
-                <Sparkles className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </CardTitle>
-              <CardDescription>
-                Experience instant medical consultations with WebSocket-powered real-time communication.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="relative z-10">
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-medical-accent" />
-                  Instant responses
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-medical-accent" />
-                  Live disease queries
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-medical-accent" />
-                  WebSocket technology
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-medical-accent" />
-                  Seamless interaction
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
         </div>
       </section>
 

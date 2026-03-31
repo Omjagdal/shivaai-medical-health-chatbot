@@ -8,7 +8,7 @@ import uuid
 import logging
 from typing import AsyncGenerator
 
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 
 from app.models.schemas import ChatRequest, ChatResponse, SourceDocument
@@ -72,35 +72,4 @@ async def chat_endpoint(request: ChatRequest):
     )
 
 
-# ─────────────────────────────────────────────
-# WebSocket (backward compatibility)
-# ─────────────────────────────────────────────
-@router.websocket("/ws")
-async def websocket_chat(websocket: WebSocket):
-    """WebSocket endpoint for real-time chat (backward compatible)."""
-    await websocket.accept()
 
-    try:
-        while True:
-            query = await websocket.receive_text()
-            result = await process_chat(query)
-
-            response = {
-                "question": query,
-                "llm_answer": result.answer,
-                "retrieved_docs": [
-                    s["content"] for s in result.sources
-                ],
-                "confidence": result.confidence,
-                "needs_professional_review": result.needs_professional_review,
-            }
-            await websocket.send_json(response)
-
-    except WebSocketDisconnect:
-        logger.info("WebSocket client disconnected")
-    except Exception as e:
-        logger.error("WebSocket error: %s", e)
-        try:
-            await websocket.send_json({"error": str(e)})
-        except Exception:
-            pass

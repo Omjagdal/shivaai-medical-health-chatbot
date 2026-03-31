@@ -157,30 +157,6 @@ async def legacy_simplify_term(term: str = Form(...)):
     return await simplify_term(term)
 
 
-# Legacy WebSocket for backward compatibility
-from fastapi import WebSocket, WebSocketDisconnect
-
-@app.websocket("/ws/disease_info")
-async def legacy_websocket(websocket: WebSocket):
-    """Legacy WebSocket — uses new RAG pipeline."""
-    from app.services.rag_service import process_chat
-
-    await websocket.accept()
-    try:
-        while True:
-            query = await websocket.receive_text()
-            result = await process_chat(query)
-            response = {
-                "question": query,
-                "llm_answer": result.answer,
-                "retrieved_docs": [s.get("content", "") for s in result.sources],
-            }
-            await websocket.send_json(response)
-    except WebSocketDisconnect:
-        logger.info("Legacy WebSocket client disconnected")
-    except Exception as e:
-        logger.error("Legacy WebSocket error: %s", e)
-
 
 # ─────────────────────────────────────────────
 # Run

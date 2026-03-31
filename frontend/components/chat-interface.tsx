@@ -13,7 +13,6 @@ import { Send, Bot, User, Loader2, Heart, Brain, Stethoscope, Upload, Zap, Spark
 import { api, type ChatMessage, type ChatResponse, type SourceDocument } from "@/lib/api"
 import { ReportUpload } from "./report-upload"
 import { TermSimplifier } from "./term-simplifier"
-import { RealTimeChat } from "./real-time-chat"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
@@ -294,10 +293,6 @@ export function ChatInterface() {
             <Bot className="h-4 w-4 shrink-0" />
             <span className="truncate">AI Chat</span>
           </TabsTrigger>
-          <TabsTrigger value="realtime" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300 px-2 py-1.5">
-            <Zap className="h-4 w-4 shrink-0" />
-            <span className="truncate">Real-Time</span>
-          </TabsTrigger>
           <TabsTrigger value="upload" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-lg transition-all duration-300 px-2 py-1.5">
             <Upload className="h-4 w-4 shrink-0" />
             <span className="truncate">Reports</span>
@@ -459,10 +454,6 @@ export function ChatInterface() {
               </p>
             </div>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="realtime" className="flex-1 mt-0">
-          <div className="animate-slide-up"><RealTimeChat /></div>
         </TabsContent>
 
         <TabsContent value="upload" className="flex-1 mt-0">

@@ -225,21 +225,5 @@ export const api = {
     return response.json()
   },
 
-  // WebSocket (for real-time chat backward compat)
-  connectWebSocket: (onMessage: (data: any) => void, onError?: (error: Event) => void) => {
-    const wsUrl = API_BASE_URL.replace("http", "ws") + "/ws/disease_info"
-    const ws = new WebSocket(wsUrl)
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      onMessage(data)
-    }
-
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error)
-      onError?.(error)
-    }
-
-    return ws
-  },
 }
